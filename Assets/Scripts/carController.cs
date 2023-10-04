@@ -12,33 +12,50 @@ public class carController : MonoBehaviour
     public Rigidbody rb;
     public bool go = false;
     public float initialDelay;
+    public Vector3 velocity;
+    public float speed = 10.0f;
+
     // Start is called before the first frame update
+
+
     void Start()
     {
         wps = new List<Transform>();
         GetComponent<Rigidbody>();
         GameObject wp;
-
+        wp = GameObject.Find("Waypoint Car (0)");
+        wps.Add(wp.transform);
         wp = GameObject.Find("Waypoint Car (1)");
         wps.Add(wp.transform);
-
         wp = GameObject.Find("Waypoint Car (2)");
         wps.Add(wp.transform);
-
         wp = GameObject.Find("Waypoint Car (3)");
         wps.Add(wp.transform);
-
         wp = GameObject.Find("Waypoint Car (4)");
+        wps.Add(wp.transform);
+        wp = GameObject.Find("Waypoint Car (5)");
+        wps.Add(wp.transform);
+        wp = GameObject.Find("Waypoint Car (6)");
+        wps.Add(wp.transform);
+        wp = GameObject.Find("Waypoint Car (7)");
+        wps.Add(wp.transform);
+        wp = GameObject.Find("Waypoint Car (8)");
+        wps.Add(wp.transform);
+        wp = GameObject.Find("Waypoint Car (9)");
+        wps.Add(wp.transform);
+        wp = GameObject.Find("Waypoint Car (10)");
         wps.Add(wp.transform);
 
         SetRoute();
-        initialDelay = Random.Range(2.0f, 12.0f);
+        initialDelay = Random.Range(0.0f, 1.0f);
         transform.position = new Vector3(0.0f, -5.0f, 0.0f);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+   
+
         if (!go)
         {
             initialDelay -= Time.deltaTime;
@@ -63,9 +80,9 @@ public class carController : MonoBehaviour
             }
         }
         //calculate velocity for this frame
-        Vector3 velocity = displacement;
+        velocity = displacement;
         velocity.Normalize();
-        velocity *= 10f;
+        velocity *= speed;
         //apply velocity
         Vector3 newPosition = transform.position;
         newPosition += velocity * Time.deltaTime;
@@ -73,7 +90,7 @@ public class carController : MonoBehaviour
 
         //align to velocity
         Vector3 desiredForward = Vector3.RotateTowards(transform.forward, velocity,
-        10.0f * Time.deltaTime, 0f);
+        10f * Time.deltaTime, 0f);
         Quaternion rotation = Quaternion.LookRotation(desiredForward);
         rb.MoveRotation(rotation);
 
@@ -82,16 +99,34 @@ public class carController : MonoBehaviour
     void SetRoute()
     {
         //randomise the next route
-        routeNumber = Random.Range(0, 2);
+        routeNumber = Random.Range(3, 4);
+
         //set the route waypoints
-        if (routeNumber == 0) route = new List<Transform> { wps[0], wps[1]   };
-        else if (routeNumber == 1) route = new List<Transform> { wps[2], wps[3] };
-        else if (routeNumber == 2) route = new List<Transform> { wps[1], wps[0] };
-        else if (routeNumber == 3) route = new List<Transform> { wps[3], wps[2] };
+        if (routeNumber == 0) route = new List<Transform> { wps[4], wps[6], wps[7], wps[2] };
+        if (routeNumber == 1) route = new List<Transform> { wps[0], wps[8], wps[9], wps[5] };
+        if (routeNumber == 2) route = new List<Transform> { wps[4], wps[6], wps[10], wps[1] };
+        if (routeNumber == 3) route = new List<Transform> { wps[0], wps[1] };
 
 
         //initialise position and waypoint counter
         transform.position = new Vector3(route[0].position.x, 0.0f, route[0].position.z);
         targetWP = 1;
+
     }
+
+
+    void OnTriggerEnter(Collider other)
+    {
+     
+        Debug.Log("Entered Trigger");
+        speed = 0.0f;
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        Debug.Log("Exited Trigger");     
+        speed = 10.0f;     
+    }
+
+
 }

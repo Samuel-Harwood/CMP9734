@@ -5,14 +5,17 @@ TagManager:
   serializedVersion: 2
   tags:
   - Pedestrian
+  - TrafficLight
+  - Car
+  - Red
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Roads
   - Water
   - UI
-  - 
+  - Floor
   - 
   - 
   - 

@@ -15,6 +15,7 @@ public class TrafficLightController : MonoBehaviour
     public GameObject t3red;
     public float stateTimer;
     public int state;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -60,8 +61,8 @@ public class TrafficLightController : MonoBehaviour
             t1red.active = false;
             t2green.active = false;
             t2red.active = true;
-            t3green.active = false;
-            t3red.active = true;
+            t3green.SetActive(false);
+            t3red.SetActive(true);
         }
         else
         {
@@ -69,8 +70,8 @@ public class TrafficLightController : MonoBehaviour
             t1red.active = true;
             t2green.active = true;
             t2red.active = false;
-            t3green.active = true;
-            t3red.active = false;
+            t3green.SetActive(true);
+            t3red.SetActive(false);
         }
     }
 

@@ -14,7 +14,6 @@ public class carController : MonoBehaviour
     public float initialDelay;
     public Vector3 velocity;
     public float speed = 10.0f;
-
     // Start is called before the first frame update
 
 
@@ -44,6 +43,8 @@ public class carController : MonoBehaviour
         wp = GameObject.Find("Waypoint Car (9)");
         wps.Add(wp.transform);
         wp = GameObject.Find("Waypoint Car (10)");
+        wps.Add(wp.transform);
+        wp = GameObject.Find("Waypoint Car (11)");
         wps.Add(wp.transform);
 
         SetRoute();
@@ -90,7 +91,7 @@ public class carController : MonoBehaviour
 
         //align to velocity
         Vector3 desiredForward = Vector3.RotateTowards(transform.forward, velocity,
-        10f * Time.deltaTime, 0f);
+        8.0f * Time.deltaTime, 0.0f); //10.0f
         Quaternion rotation = Quaternion.LookRotation(desiredForward);
         rb.MoveRotation(rotation);
 
@@ -99,17 +100,17 @@ public class carController : MonoBehaviour
     void SetRoute()
     {
         //randomise the next route
-        routeNumber = Random.Range(3, 4);
+        routeNumber = Random.Range(2, 3);
 
         //set the route waypoints
         if (routeNumber == 0) route = new List<Transform> { wps[4], wps[6], wps[7], wps[2] };
         if (routeNumber == 1) route = new List<Transform> { wps[0], wps[8], wps[9], wps[5] };
-        if (routeNumber == 2) route = new List<Transform> { wps[4], wps[6], wps[10], wps[1] };
+        if (routeNumber == 2) route = new List<Transform> { wps[4], wps[6], wps[11], wps[10], wps[1] };
         if (routeNumber == 3) route = new List<Transform> { wps[0], wps[1] };
 
 
         //initialise position and waypoint counter
-        transform.position = new Vector3(route[0].position.x, 0.0f, route[0].position.z);
+        transform.position = new Vector3(route[0].position.x, 0.55f, route[0].position.z);
         targetWP = 1;
 
     }
@@ -117,15 +118,21 @@ public class carController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-     
-        Debug.Log("Entered Trigger");
-        speed = 0.0f;
+        if(other.tag == "Red")
+        {
+            Debug.Log("RedLight");
+            speed = 0.0f;
+        }
+        if (other.tag == "Green")
+        {
+            Debug.Log("GreenLight");
+            speed = 10.0f;
+        }
     }
 
     void OnTriggerExit(Collider other)
     {
-        Debug.Log("Exited Trigger");     
-        speed = 10.0f;     
+        Debug.Log("Exited Trigger");
     }
 
 

@@ -8,6 +8,7 @@ TagManager:
   - TrafficLight
   - Car
   - Red
+  - Green
   layers:
   - Default
   - TransparentFX

@@ -14,6 +14,7 @@ public class carController : MonoBehaviour
     public float initialDelay;
     public Vector3 velocity;
     public float speed = 10.0f;
+    public float turnspeed = 2.0f;
     // Start is called before the first frame update
 
 
@@ -52,10 +53,14 @@ public class carController : MonoBehaviour
         transform.position = new Vector3(0.0f, -5.0f, 0.0f);
     }
 
+
+
     // Update is called once per frame
     void FixedUpdate()
     {
-   
+
+
+
 
         if (!go)
         {
@@ -71,7 +76,7 @@ public class carController : MonoBehaviour
         Vector3 displacement = route[targetWP].position - transform.position;
         displacement.y = 0;
         float dist = displacement.magnitude;
-        if (dist < 0.1f)
+        if (dist < 1.2f)
         {
             targetWP++;
             if (targetWP >= route.Count)
@@ -90,9 +95,14 @@ public class carController : MonoBehaviour
         rb.MovePosition(newPosition);
 
         //align to velocity
+
+        // Move towards the current waypoint
         Vector3 desiredForward = Vector3.RotateTowards(transform.forward, velocity,
-        8.0f * Time.deltaTime, 0.0f); //10.0f
+        10.0f * Time.deltaTime, 0.0f); //10.0f
+
+
         Quaternion rotation = Quaternion.LookRotation(desiredForward);
+
         rb.MoveRotation(rotation);
 
     }
@@ -105,8 +115,10 @@ public class carController : MonoBehaviour
         //set the route waypoints
         if (routeNumber == 0) route = new List<Transform> { wps[4], wps[6], wps[7], wps[2] };
         if (routeNumber == 1) route = new List<Transform> { wps[0], wps[8], wps[9], wps[5] };
-        if (routeNumber == 2) route = new List<Transform> { wps[4], wps[6], wps[11], wps[10], wps[1] };
+        if (routeNumber == 2) route = new List<Transform> { wps[4], wps[6], wps[10], wps[1] };
         if (routeNumber == 3) route = new List<Transform> { wps[0], wps[1] };
+        if (routeNumber == 4) route = new List<Transform> { wps[3], wps[11], wps[9], wps[5] };
+
 
 
         //initialise position and waypoint counter
@@ -127,6 +139,11 @@ public class carController : MonoBehaviour
         {
             Debug.Log("GreenLight");
             speed = 10.0f;
+        }
+        if (other.tag == "Car")
+        {
+            Debug.Log("Car");
+            speed = 0.0f;
         }
     }
 

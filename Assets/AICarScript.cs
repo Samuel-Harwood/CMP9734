@@ -9,7 +9,7 @@ public class AICarScript : MonoBehaviour
     private List<Transform> path;
     public Transform pathGroup;
 
-    public float maxSteer = 15; //15
+    public float maxSteer = 60; //15
 
     public WheelCollider wheelFL;
     public WheelCollider wheelFR;

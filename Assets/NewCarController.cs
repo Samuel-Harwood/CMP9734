@@ -14,11 +14,12 @@ public class NewCarController : MonoBehaviour
     public float maxSpeed = 10.0f;
     public float distFromPath = 20f; //20
     public float minSpeed = 0f;
-
+    
 
 
     void Start()
     {
+      
         path = new List<Transform>();
         rb = GetComponent<Rigidbody>();
         getPath();
@@ -84,7 +85,8 @@ public class NewCarController : MonoBehaviour
     {
         if (other.tag == "Red")
         {
-            speed = 0;
+        
+            speed = 0.0f;
         }
         if (other.tag == "Green")
         {

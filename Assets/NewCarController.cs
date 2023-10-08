@@ -12,7 +12,7 @@ public class NewCarController : MonoBehaviour
     public float speed = 8.0f;
     public float maxSteer = 60; //15
     public float maxSpeed = 10.0f;
-    public float distFromPath = 20f; //20
+    public float distFromPath = 2f; //20
     public float minSpeed = 0f;
     
 

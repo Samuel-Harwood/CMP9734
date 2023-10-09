@@ -14,7 +14,7 @@ public class NewCarController : MonoBehaviour
     public float maxSpeed = 10.0f;
     public float distFromPath = 2f; //20
     public float minSpeed = 0f;
-    
+    public float acceleration = 0.4f;
 
 
     void Start()
@@ -79,31 +79,45 @@ public class NewCarController : MonoBehaviour
 
 
    
-    
+    void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "Red")
+        {
+            if(speed > 0.0f)
+            {
+                speed -= acceleration;
+            }
+        }
+     
+    }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Red")
         {
-        
-            speed = 0.0f;
+            
+            Debug.Log("Redlight");
+           
+            speed -= acceleration;
+            
+            //speed = 0.0f;
         }
-        if (other.tag == "Green")
-        {
-            Debug.Log("GreenLight");
-            speed = 10.0f;
-        }
-        if (other.tag == "Car")
-        {
-            Debug.Log("Car");
-            speed = 0.0f;
-        }
+        //if (other.tag == "Green")
+        //{
+        //    Debug.Log("GreenLight");
+        //    speed = 10.0f;
+        //}
+        //if (other.tag == "Car")
+        //{
+        //    Debug.Log("Car");
+        //    speed = 0.0f;
+        //}
     }
 
-    void OnTriggerExit(Collider other)
-    {
-        Debug.Log("Exited Trigger");
-    }
+    //void OnTriggerExit(Collider other)
+    //{
+    //    Debug.Log("Exited Trigger");
+    //}
 
 
 }

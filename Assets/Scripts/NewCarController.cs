@@ -9,12 +9,9 @@ public class NewCarController : MonoBehaviour
     public int currentPathObj;
     public Vector3 velocity;
     public Rigidbody rb;
-    public float speed = 8.0f;
-    public float maxSteer = 60; //15
-    public float maxSpeed = 10.0f;
+    public float speed = 10.0f;
     public float distFromPath = 2f; //20
-    public float minSpeed = 0f;
-    public float acceleration = 0.4f;
+    public float acceleration = 0.3f;
 
 
     void Start()
@@ -88,30 +85,36 @@ public class NewCarController : MonoBehaviour
                 speed -= acceleration;
             }
         }
-     
+       
+        if (other.tag == "Green")
+        {
+            if (speed < 10.0f)
+            {
+                speed += acceleration;
+            }
+        }
+        if (other.tag == "Car")
+        {
+            Debug.Log("See Car");
+            if (speed > 0.0f)
+            {
+                speed -= acceleration;
+            }
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        speed = 8.0f;
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Red")
+        if (other.tag == "Pedestrian")
         {
-            
-            Debug.Log("Redlight");
-           
-            speed -= acceleration;
-            
-            //speed = 0.0f;
+            speed = 0;
         }
-        //if (other.tag == "Green")
-        //{
-        //    Debug.Log("GreenLight");
-        //    speed = 10.0f;
-        //}
-        //if (other.tag == "Car")
-        //{
-        //    Debug.Log("Car");
-        //    speed = 0.0f;
-        //}
+
     }
 
     //void OnTriggerExit(Collider other)

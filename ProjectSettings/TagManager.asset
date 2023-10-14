@@ -9,6 +9,7 @@ TagManager:
   - Car
   - Red
   - Green
+  - brake
   layers:
   - Default
   - TransparentFX

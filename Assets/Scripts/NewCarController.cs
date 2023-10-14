@@ -14,9 +14,17 @@ public class NewCarController : MonoBehaviour
     public float acceleration = 0.3f;
 
 
+    public GameObject brake1;
+    public GameObject brake2;
+
+
     void Start()
     {
-      
+   /*     brakelight1 = brake1.Find("Spot Light").gameObject;
+        brakelight2 = brake2.Find("Spot Light (1)").gameObject;*/
+        brake1.SetActive(false);
+        brake2.SetActive(false);
+
         path = new List<Transform>();
         rb = GetComponent<Rigidbody>();
         getPath();
@@ -80,7 +88,10 @@ public class NewCarController : MonoBehaviour
     {
         if (other.tag == "Red")
         {
-            if(speed > 0.0f)
+            brake1.SetActive(true);
+            brake2.SetActive(true);
+            
+            if (speed > 0.0f)
             {
                 speed -= acceleration;
             }
@@ -88,6 +99,8 @@ public class NewCarController : MonoBehaviour
        
         if (other.tag == "Green")
         {
+            brake1.SetActive(false);
+            brake2.SetActive(false);
             if (speed < 10.0f)
             {
                 speed += acceleration;
@@ -95,6 +108,8 @@ public class NewCarController : MonoBehaviour
         }
         if (other.tag == "Car")
         {
+            brake1.SetActive(true);
+            brake2.SetActive(true);
             Debug.Log("See Car");
             if (speed > 0.0f)
             {
@@ -105,6 +120,8 @@ public class NewCarController : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
+        brake1.SetActive(false);
+        brake2.SetActive(false);
         speed = 8.0f;
     }
 

@@ -1,2 +1,2 @@
 # CMP9734
-no stealing
+VR and AR
